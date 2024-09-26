@@ -30,11 +30,11 @@ export const createNews = async (req, res) => {
 };
 
 
-export const getNews = async (req,res) => {
+export const getNews = async (req, res) => {
   try {
-    const news = await News.find({})
-    res.status(200).json({success : true , message : "All news fetched"})
+    const news = await News.find({}); 
+    res.status(200).json({ success: true, message: "All news fetched", data: news }); 
   } catch (error) {
-    res.status(404).json({success : false , message : "Error in fetching all News"})
+    res.status(404).json({ success: false, message: "Error in fetching all news" });
   }
-}
+};
