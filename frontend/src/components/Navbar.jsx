@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import logo from "../../public/logo-nav.png"; // Ensure this path is correct
+import logo from "/logo-nav.png"; // Ensure this path is correct
 
 const Navbar = () => {
   const [currentTime, setCurrentTime] = useState("");

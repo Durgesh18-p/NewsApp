@@ -1,30 +1,38 @@
 import express from "express";
-import cors from "cors";
 import { connectDB } from "./config/db.js";
 import dotenv from "dotenv";
 import router from "./routes/newsRoutes.routes.js";
+import cors from "cors";
 
-dotenv.config();  // Load environment variables first
+dotenv.config(); 
 
 const app = express();
 
-// Middleware for JSON parsing and CORS
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
 
-// Define routes
+// Enable CORS for your frontend
+app.use(cors({
+  origin: 'http://localhost:5173', // Your frontend origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
+  credentials: true // Allow credentials (like cookies or tokens)
+}));
+
+// Routes
 app.use('/news', router);
 
-// Connect to the database and start the server
 const PORT = process.env.PORT || 8000;
+const HOST = process.env.HOST
 
-app.listen(PORT, async () => {
+app.listen(PORT, HOST , async () => {
   try {
-    await connectDB();  // Connect to the MongoDB database
-    console.log(`Server is running on http://localhost:${PORT}`);
+    await connectDB();  // Make sure this is working correctly
+    console.log(`Server running on http://${HOST}:${PORT}`);
   } catch (error) {
     console.error('Error starting the server:', error);
-    process.exit(1);  // Exit if there's an error starting the server
+    process.exit(1); 
   }
 });
+
+server.keepAliveTimeout = 120000; 
+server.headersTimeout = 120000;

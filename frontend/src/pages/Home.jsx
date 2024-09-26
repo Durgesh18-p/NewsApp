@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+// import { path } from "../backendPath";
 import axios from "axios";
 
 const Home = () => {
@@ -10,8 +11,14 @@ const Home = () => {
   }, []);
 
   const fetchNews = async () => {
-    const data = await axios.get("http://localhost:8000/news");
-    setNewsData(data.data.data);
+    try {
+      const { data } = await axios.get(
+        `https://newsapp-vfx1.onrender.com/news`
+      );
+      setNewsData(data.data);
+    } catch (error) {
+      console.error("Error fetching news data", error);
+    }
   };
 
   return (
