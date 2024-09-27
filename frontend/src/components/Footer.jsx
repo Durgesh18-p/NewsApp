@@ -28,7 +28,7 @@ const Footer = () => {
             initial={{ scale: 1 }}
             whileHover={{
               scale: 1.2,
-              backgroundColor: "#0A66C2",
+              backgroundColor: "#c026d3",
               transition: { duration: 0.3 },
             }}
             className="p-3 rounded-full hover:bg-[#E77917] transition duration-300 ease-in-out"
@@ -99,14 +99,15 @@ const Footer = () => {
 
         <div className="text-center space-x-4">
           <motion.a
-            href="#"
+            href="/"
             className="hover:underline hover:text-[#E77917] transition-colors duration-300"
             whileHover={{ color: "#E77917" }}
           >
             Home
           </motion.a>
           <motion.a
-            href="#"
+            href="https://suryadurgesh-18.netlify.app/"
+            target="_black"
             className="hover:underline hover:text-[#E77917] transition-colors duration-300"
             whileHover={{ color: "#E77917" }}
           >
