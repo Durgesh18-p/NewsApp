@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import logo from "/logo-nav.png"; // Ensure this path is correct
+import logo from "/logo-nav.png";
+import CategoryNavbar from "./CategoryNavbar";
 
 const Navbar = () => {
   const [currentTime, setCurrentTime] = useState("");
@@ -26,32 +27,36 @@ const Navbar = () => {
   }, []);
 
   return (
-    <motion.nav
-      className="flex justify-around items-center p-4 bg-[#FAFAFA] shadow-md sticky top-0 z-50"
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      <div className="flex justify-around items-center w-full">
-        <div>
-          <div className="hidden md:block text-lg font-semibold">
-            {currentTime}
+    <>
+      {" "}
+      <motion.nav
+        className="flex justify-around items-center p-4 bg-[#FAFAFA] shadow-md sticky top-0 z-50"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex justify-around items-center w-full">
+          <div>
+            <div className="hidden md:block text-lg font-semibold">
+              {currentTime}
+            </div>
+          </div>
+          <Link to={"/"} className="flex-grow flex justify-center">
+            <img src={logo} alt="Logo" className="h-[70px] w-[160px]" />
+          </Link>
+          {/* Right side: Time and Weather */}
+          <div className="flex items-center text-[#130912] text-lg font-semibold ">
+            <Link
+              to="/"
+              className=" text-[#130912] rounded hidden md:block hover:underline-[#E77917]"
+            >
+              Weather
+            </Link>
           </div>
         </div>
-        <Link to={"/"} className="flex-grow flex justify-center">
-          <img src={logo} alt="Logo" className="h-[70px] w-[160px]" />
-        </Link>
-        {/* Right side: Time and Weather */}
-        <div className="flex items-center text-[#130912] text-lg font-semibold ">
-          <Link
-            to="/"
-            className=" text-[#130912] rounded hidden md:block hover:underline-[#E77917]"
-          >
-            Weather
-          </Link>
-        </div>
-      </div>
-    </motion.nav>
+      </motion.nav>
+      <CategoryNavbar />
+    </>
   );
 };
 
