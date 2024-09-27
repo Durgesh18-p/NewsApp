@@ -2,6 +2,7 @@ import express from "express";
 import { connectDB } from "./config/db.js";
 import dotenv from "dotenv";
 import router from "./routes/newsRoutes.routes.js";
+import adminRouter from "./routes/admin.routes.js";
 import cors from "cors";
 
 dotenv.config(); 
@@ -19,6 +20,7 @@ app.use(cors({
 }));
 
 app.use('/news', router);
+app.use('/admin', adminRouter);
 
 const PORT = process.env.PORT || 8000;
 const HOST = process.env.HOST

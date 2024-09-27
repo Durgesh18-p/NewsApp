@@ -13,6 +13,10 @@ const newsSchema = new mongoose.Schema({
   description: {
     type: String,
     required: true,  // Corrected 'require' to 'required'
+  },
+  category : {
+    type : String,
+    required : true
   }
 }, { timestamps: true });
 
