@@ -13,21 +13,22 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.use(cors({
-  origin: 'https://the-observers-insight.vercel.app', 
+  origin: 'http://localhost:5173', 
   methods: ['GET', 'POST', 'PUT', 'DELETE'], 
   credentials: true 
 }));
-
 
 app.use('/news', router);
 
 const PORT = process.env.PORT || 8000;
 const HOST = process.env.HOST
 
-app.listen(PORT, HOST , async () => {
+app.listen(PORT , async () => {
   try {
     await connectDB(); 
-    console.log(`Server running on http://${HOST}:${PORT}`);
+    // console.log(`Server running on http://${HOST}:${PORT}`);
+    console.log(`server running on http://localhost:${PORT}`);
+    
   } catch (error) {
     console.error('Error starting the server:', error);
     process.exit(1); 

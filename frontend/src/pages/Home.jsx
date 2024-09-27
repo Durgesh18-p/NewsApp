@@ -15,9 +15,7 @@ const Home = () => {
 
   const fetchNews = async () => {
     try {
-      const { data } = await axios.get(
-        `https://newsapp-vfx1.onrender.com/news`
-      );
+      const { data } = await axios.get(`http://localhost:8000/news`);
       setNewsData(data.data);
       setLoading(false); // Stop loading once data is fetched
     } catch (error) {

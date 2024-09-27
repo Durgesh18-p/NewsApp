@@ -12,7 +12,7 @@ const NewsCarousel = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await fetch("https://newsapp-vfx1.onrender.com/news");
+        const response = await fetch("http://localhost:8000/news");
         const data = await response.json();
         setNewsItems(data.data);
       } catch (error) {
