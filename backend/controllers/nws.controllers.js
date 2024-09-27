@@ -38,3 +38,16 @@ export const getNews = async (req, res) => {
     res.status(404).json({ success: false, message: "Error in fetching all news" });
   }
 };
+
+
+export const getOneNews = 
+  async (req,res) => {
+    const {id} = req.params;
+    try {
+      const news = await News.findById(id)
+      res.status(200).json({success : true, message: "News fetched by ID" , data : news})
+    } catch (error) {
+      res.status(404).json({success : false , message : "Error in Fetching News by ID"})
+    }
+  }
+  
