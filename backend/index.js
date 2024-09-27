@@ -13,10 +13,11 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.use(cors({
-  origin: 'http://localhost:5173' || 'https://the-observers-insight.vercel.app', 
+  origin: ['http://localhost:5173', 'https://the-observers-insight.vercel.app'], 
   methods: ['GET', 'POST', 'PUT', 'DELETE'], 
   credentials: true 
 }));
+
 
 app.use('/news', router);
 
