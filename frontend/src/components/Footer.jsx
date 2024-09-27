@@ -67,7 +67,7 @@ const Footer = () => {
           </motion.a>
 
           <motion.a
-            href="https://wa.me/1234567890"
+            href="https://wa.me/9405807468"
             target="_blank"
             rel="noopener noreferrer"
             initial={{ scale: 1 }}
