@@ -31,7 +31,9 @@ const NewsDetails = () => {
   useEffect(() => {
     const fetchNewsDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:10000/news/${id}`);
+        const response = await fetch(
+          `https://newsapp-vfx1.onrender.com/news/${id}`
+        );
         const data = await response.json();
         setNewsItem(data.data);
         setLoading(false);
