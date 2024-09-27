@@ -11,14 +11,13 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Enable CORS for your frontend
+
 app.use(cors({
-  origin: 'http://localhost:5173', // Your frontend origin
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
-  credentials: true // Allow credentials (like cookies or tokens)
+  origin: 'http://localhost:5173', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+  credentials: true 
 }));
 
-// Routes
 app.use('/news', router);
 
 const PORT = process.env.PORT || 8000;
@@ -26,7 +25,7 @@ const HOST = process.env.HOST
 
 app.listen(PORT, HOST , async () => {
   try {
-    await connectDB();  // Make sure this is working correctly
+    await connectDB(); 
     console.log(`Server running on http://${HOST}:${PORT}`);
   } catch (error) {
     console.error('Error starting the server:', error);
