@@ -14,13 +14,48 @@ const News = ({ item }) => {
   // Limit the description to 100 characters and show "Read More" if it exceeds
   const shortDescription = item.description.slice(0, 100);
 
+  // Function to highlight specific terms in the description
+  const highlightTerms = (text) => {
+    const termsToHighlight = [
+      "Israel",
+      "Benjamin Netanyahu",
+      "Donald Trump",
+      "Kamala",
+      "Hezbollah",
+      "133.0 mm",
+      "highest rainfall ever",
+      "orange alert for Mumbai",
+      "BRICS",
+      "india",
+      "China",
+      "Russia",
+      "Brazil",
+      "South Africa",
+      "USA",
+      "America",
+    ]; // Replace with actual terms
+
+    const regex = new RegExp(`(${termsToHighlight.join("|")})`, "gi");
+    return text.split(regex).map((part, index) => {
+      // Check if the part matches any term to highlight
+      if (termsToHighlight.includes(part)) {
+        return (
+          <span key={index} style={{ color: "#E77917" }}>
+            {part}
+          </span>
+        );
+      }
+      return part; // Return the text part without highlighting
+    });
+  };
+
   return (
     <motion.div
       key={item._id}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className="bg-white border-2 border-transparent rounded-lg overflow-hidden max-w-sm sm:max-w-md lg:max-w-lg mx-auto transition duration-300 ease-in-out "
+      className="bg-white border-2 border-transparent rounded-lg overflow-hidden max-w-sm sm:max-w-md lg:max-w-lg mx-auto transition duration-300 ease-in-out text-justify"
     >
       <motion.img
         src={item.image}
@@ -32,7 +67,9 @@ const News = ({ item }) => {
 
         {/* Display short description with "Read More" toggle */}
         <p className="font-normal text-[17px] text-gray-600 mt-2">
-          {showFullDescription ? item.description : `${shortDescription}...`}
+          {showFullDescription
+            ? highlightTerms(item.description)
+            : highlightTerms(`${shortDescription}...`)}
         </p>
 
         {/* Read More / Show Less toggle button */}
