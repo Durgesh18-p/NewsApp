@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
-// import { path } from "../backendPath";
+import News from "../components/News";
+import Loader from "../components/Loader";
 import axios from "axios";
 
 const Home = () => {
-  let [newsData, setNewsData] = useState([]);
+  const [newsData, setNewsData] = useState([]); // Use 'const' and ensure the initial state is an empty array
+  const [loading, setLoading] = useState(true); // Add a loading state to track whether data is being fetched
+
   console.log(newsData);
 
   useEffect(() => {
@@ -16,17 +19,25 @@ const Home = () => {
         `https://newsapp-vfx1.onrender.com/news`
       );
       setNewsData(data.data);
+      setLoading(false); // Stop loading once data is fetched
     } catch (error) {
       console.error("Error fetching news data", error);
+      setLoading(false); // Stop loading even if there's an error
     }
   };
 
+  if (loading) {
+    return <Loader />; // Render the loader while data is loading
+  }
+
   return (
-    <>
-      <img src={newsData[0]?.image} alt="" className="h-[200px] w-[200px]" />
-      <p className="font-bold text-xl">{newsData[0]?.title}</p>
-      <p className="font-normal text-[17px]">{newsData[0]?.description}</p>
-    </>
+    <div className="px-4 sm:px-8 md:px-16 lg:px-32 xl:px-48 py-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {newsData?.map((item) => (
+          <News key={item._id} item={item} />
+        ))}
+      </div>
+    </div>
   );
 };
 
