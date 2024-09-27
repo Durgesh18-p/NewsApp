@@ -11,7 +11,6 @@ const Footer = () => {
   return (
     <footer className="bg-[#130912] text-[#FAFAFA] py-8">
       <div className="max-w-screen-xl mx-auto px-4 sm:px-8">
-        {/* Meet the Developer Section */}
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -21,11 +20,9 @@ const Footer = () => {
           Contact Developer
         </motion.h2>
 
-        {/* Social Media Icons */}
         <div className="flex justify-center space-x-6 mb-6">
-          {/* LinkedIn Icon */}
           <motion.a
-            href="linkedin.com/in/durgesh-suryawanshi-056a58230" // Replace with your LinkedIn URL
+            href="linkedin.com/in/durgesh-suryawanshi-056a58230"
             target="_blank"
             rel="noopener noreferrer"
             initial={{ scale: 1 }}
@@ -39,15 +36,14 @@ const Footer = () => {
             <FaLinkedin className="text-[#FAFAFA] text-2xl" />
           </motion.a>
 
-          {/* X (formerly Twitter) Icon */}
           <motion.a
-            href="https://www.twitter.com" // Replace with your X URL
+            href="https://x.com/Suryadurgesh_18"
             target="_blank"
             rel="noopener noreferrer"
             initial={{ scale: 1 }}
             whileHover={{
               scale: 1.2,
-              backgroundColor: "#000", // Black background for "X" branding
+              backgroundColor: "#000",
               transition: { duration: 0.3 },
             }}
             className="p-3 rounded-full hover:bg-[#E77917] transition duration-300 ease-in-out"
@@ -55,7 +51,6 @@ const Footer = () => {
             <FaXing className="text-[#FAFAFA] text-2xl" />
           </motion.a>
 
-          {/* GitHub Icon */}
           <motion.a
             href="https://github.com/Durgesh18-p"
             target="_blank"
@@ -71,15 +66,14 @@ const Footer = () => {
             <FaGithub className="text-[#FAFAFA] text-2xl" />
           </motion.a>
 
-          {/* WhatsApp Icon */}
           <motion.a
-            href="https://wa.me/1234567890" // Replace with your WhatsApp URL
+            href="https://wa.me/1234567890"
             target="_blank"
             rel="noopener noreferrer"
             initial={{ scale: 1 }}
             whileHover={{
               scale: 1.2,
-              backgroundColor: "#25D366", // WhatsApp's green
+              backgroundColor: "#25D366",
               transition: { duration: 0.3 },
             }}
             className="p-3 rounded-full hover:bg-[#E77917] transition duration-300 ease-in-out"
@@ -87,15 +81,14 @@ const Footer = () => {
             <FaWhatsapp className="text-[#FAFAFA] text-2xl" />
           </motion.a>
 
-          {/* Email Icon */}
           <motion.a
-            href="mailto:suryadurgesh18@gmail.com.com" // Replace with your email
+            href="mailto:suryadurgesh18@gmail.com.com"
             target="_blank"
             rel="noopener noreferrer"
             initial={{ scale: 1 }}
             whileHover={{
               scale: 1.2,
-              backgroundColor: "#1a73e8", // Blue for email hover
+              backgroundColor: "#1a73e8",
               transition: { duration: 0.3 },
             }}
             className="p-3 rounded-full hover:bg-[#E77917] transition duration-300 ease-in-out"
@@ -104,7 +97,6 @@ const Footer = () => {
           </motion.a>
         </div>
 
-        {/* Footer Links */}
         <div className="text-center space-x-4">
           <motion.a
             href="#"

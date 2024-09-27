@@ -38,9 +38,9 @@ const Navbar = () => {
             {currentTime}
           </div>
         </div>
-        <div className="flex-grow flex justify-center">
+        <Link to={"/"} className="flex-grow flex justify-center">
           <img src={logo} alt="Logo" className="h-[70px] w-[160px]" />
-        </div>
+        </Link>
         {/* Right side: Time and Weather */}
         <div className="flex items-center text-[#130912] text-lg font-semibold ">
           <Link
