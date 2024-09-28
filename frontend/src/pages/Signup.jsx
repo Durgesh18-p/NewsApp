@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { toast, Toaster } from "react-hot-toast"; // Import toast
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -27,6 +28,10 @@ const Signup = () => {
         throw new Error(data.message || "Something went wrong");
       }
 
+      // Show success toast notification
+      toast.success("Signed up successfully!");
+
+      // Redirect to login page
       window.location.href = "/login";
     } catch (error) {
       setError(error.message);
@@ -35,6 +40,8 @@ const Signup = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#FAFAFA] p-4">
+      <Toaster position="top-center" reverseOrder={false} />{" "}
+      {/* Add toaster here */}
       <motion.div
         className="bg-white shadow-md rounded-lg p-8 max-w-sm w-full"
         initial={{ scale: 0 }}

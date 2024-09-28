@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { toast, Toaster } from "react-hot-toast"; // Import toast
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -33,6 +34,9 @@ const Login = () => {
         60 * 60
       }; SameSite=Strict`;
 
+      // Show success toast notification
+      toast.success("Logged in successfully!");
+
       // Redirect to categories page or dashboard
       window.location.href = "/";
     } catch (error) {
@@ -42,6 +46,8 @@ const Login = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#FAFAFA] p-4">
+      <Toaster position="top-center" reverseOrder={false} />{" "}
+      {/* Add toaster here */}
       <motion.div
         className="bg-white shadow-md rounded-lg p-8 max-w-sm w-full"
         initial={{ scale: 0 }}
