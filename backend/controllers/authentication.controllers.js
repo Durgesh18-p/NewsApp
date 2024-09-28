@@ -73,9 +73,16 @@ export const userLogin = async (req, res) => {
   }
 };
 
-// Controller for Logout (optional)
+// Controller for Logout
 export const userLogout = async (req, res) => {
-  // Clear the token cookie
-  res.clearCookie('token');
-  res.status(200).json({ message: 'Logged out successfully' });
+  try {
+    // Clear the token cookie
+    res.clearCookie('token', { httpOnly: true, sameSite: 'Strict' });
+
+    // Respond with a success message
+    res.status(200).json({ message: 'Logged out successfully' });
+  } catch (error) {
+    // Handle any potential errors
+    res.status(500).json({ message: 'Error logging out' });
+  }
 };
