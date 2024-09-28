@@ -15,6 +15,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
 
+  const role = localStorage.getItem("role");
   // Function to get the current time and day
   const updateTime = () => {
     const now = new Date();
@@ -61,6 +62,17 @@ const Navbar = () => {
     }
   };
 
+  const renderAdminLink = () => {
+    if (role === "admin") {
+      return (
+        <Link to="/admin-panel" className="ml-3 ">
+          Admin
+        </Link>
+      );
+    }
+    return null; // Return null if the condition is not met
+  };
+
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
@@ -100,6 +112,7 @@ const Navbar = () => {
               Weather
             </Link>
           </div>
+          {<div>{renderAdminLink()}</div>}
 
           {/* Render User Icon Only If Logged In */}
           {isLoggedIn && (

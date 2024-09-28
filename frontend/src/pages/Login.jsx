@@ -12,7 +12,9 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+    if (email === "suryadurgesh18@gmail.com") {
+      localStorage.setItem("role", "admin");
+    }
     try {
       const response = await fetch("http://localhost:8000/user/login", {
         method: "POST",
