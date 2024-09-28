@@ -2,10 +2,18 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
-const categories = ["India", "International", "Sports", "Drama", "HealthCare"];
+const categories = [
+  "All",
+  "India",
+  "International",
+  "Sports",
+  "Drama",
+  "HealthCare",
+];
 
 const CategoryNavbar = () => {
-  const [activeCategory, setActiveCategory] = useState("India");
+  // Set "All" as the default active category
+  const [activeCategory, setActiveCategory] = useState("All");
 
   return (
     <nav className="w-full bg-[#FAFAFA] py-4">
@@ -14,9 +22,9 @@ const CategoryNavbar = () => {
           {categories.map((category) => (
             <Link to={category.toLowerCase()} key={category}>
               <motion.li
-                className={`cursor-pointer text-base font-medium md:text-lg ${
+                className={`cursor-pointer text-base font-medium md:text-lg relative pb-1 ${
                   activeCategory === category
-                    ? "text-[#E77917]"
+                    ? "text-[#E77917] border-b-2 border-[#E77917]"
                     : "text-[#130912]"
                 }`}
                 onClick={() => setActiveCategory(category)}

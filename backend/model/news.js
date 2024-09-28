@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-// Define the schema for the News model
 const newsSchema = new mongoose.Schema({
   image: {
     type: String,
@@ -8,11 +7,11 @@ const newsSchema = new mongoose.Schema({
   },
   title: {
     type: String,
-    required: true,  // Corrected 'require' to 'required'
+    required: true, 
   },
   description: {
     type: String,
-    required: true,  // Corrected 'require' to 'required'
+    required: true, 
   },
   category : {
     type : String,
@@ -20,6 +19,5 @@ const newsSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-// Export the News model
 const News = mongoose.model('News', newsSchema);
 export default News;
