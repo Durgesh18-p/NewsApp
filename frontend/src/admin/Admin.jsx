@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import { motion } from "framer-motion";
 import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion"; // Import Framer Motion for animation
 
 const Admin = () => {
   const [news, setNews] = useState([]);
@@ -54,7 +54,7 @@ const Admin = () => {
       title: newsItem.title,
       description: newsItem.description,
       image: newsItem.image,
-      category: newsItem.category, // Set category when editing
+      category: newsItem.category,
     });
     setIsEditMode(true);
     setIsFormVisible(true);
@@ -67,7 +67,7 @@ const Admin = () => {
         toast.success("News deleted successfully.");
         fetchNews();
       } catch (error) {
-        toast.error("Failed to delete news.");
+        toast.error("Failed to delete news.", error);
       }
     }
   };
@@ -89,15 +89,15 @@ const Admin = () => {
         setIsFormVisible(false);
         fetchNews();
       } catch (error) {
-        toast.error("Failed to update news.");
+        toast.error("Failed to update news.", error);
       }
     } else {
       try {
-        await axios.post("http://localhost:8000/", newNewsData);
+        await axios.post("http://localhost:8000/news", newNewsData);
         toast.success("News created successfully.");
         fetchNews();
       } catch (error) {
-        toast.error("Failed to create news.");
+        toast.error("Failed to create news.", error);
       }
     }
     setNewNewsData({ title: "", description: "", image: "", category: "" });
@@ -110,9 +110,13 @@ const Admin = () => {
 
   const handleCreateNewsClick = (category) => {
     setCurrentNews(null);
-    setNewNewsData({ title: "", description: "", image: "", category }); // Set category
+    setNewNewsData({ title: "", description: "", image: "", category });
     setIsEditMode(false);
     setIsFormVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsFormVisible(false);
   };
 
   return (
@@ -143,11 +147,15 @@ const Admin = () => {
                       key={newsItem._id}
                       className="border p-4 rounded shadow-md"
                     >
+                      <img src={newsItem.image} alt="" />
                       <h3 className="font-semibold">{newsItem.title}</h3>
-                      <p className="text-sm">{newsItem.description}</p>
+                      <p className="text-sm">
+                        {newsItem.description.split(" ").slice(0, 20).join(" ")}
+                        ...
+                      </p>
                       <div className="flex justify-between mt-2">
                         <button
-                          className="text-green-600 hover:text-green-800"
+                          className="text-[#f09a4e] hover:text-[#E77917]"
                           onClick={() => handleEditClick(newsItem)}
                         >
                           <FaEdit /> Edit
@@ -167,50 +175,73 @@ const Admin = () => {
         ))}
       </div>
 
-      {isFormVisible && (
-        <div className="mt-6 p-4 border rounded shadow-md">
-          <h3 className="text-xl font-semibold">
-            {isEditMode ? "Edit News" : "Create News"}
-          </h3>
-          <input
-            type="text"
-            name="title"
-            placeholder="Title"
-            value={newNewsData.title}
-            onChange={handleChange}
-            className="mt-2 p-2 border rounded w-full"
-          />
-          <textarea
-            name="description"
-            placeholder="Description"
-            value={newNewsData.description}
-            onChange={handleChange}
-            className="mt-2 p-2 border rounded w-full"
-          />
-          <input
-            type="text"
-            name="image"
-            placeholder="Image URL"
-            value={newNewsData.image}
-            onChange={handleChange}
-            className="mt-2 p-2 border rounded w-full"
-          />
-          <input
-            type="text"
-            name="category"
-            placeholder="Category"
-            value={newNewsData.category}
-            onChange={handleChange}
-            className="mt-2 p-2 border rounded w-full"
-          />
-          <button
-            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-            onClick={handleSaveClick}
+      {/* Modal for Create/Edit Form */}
+      <AnimatePresence>
+        {isFormVisible && (
+          <motion.div
+            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
           >
-            {isEditMode ? "Update News" : "Create News"}
-          </button>
-        </div>
-      )}
+            <motion.div
+              className="bg-white p-6 rounded shadow-md w-full max-w-lg mx-auto"
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.8 }}
+            >
+              <h3 className="text-xl font-semibold mb-4">
+                {isEditMode ? "Edit News" : "Create News"}
+              </h3>
+              <input
+                type="text"
+                name="title"
+                placeholder="Title"
+                value={newNewsData.title}
+                onChange={handleChange}
+                className="mt-2 p-2 border rounded w-full"
+              />
+              <textarea
+                name="description"
+                placeholder="Description"
+                value={newNewsData.description}
+                onChange={handleChange}
+                className="mt-2 p-2 border rounded w-full"
+              />
+              <input
+                type="text"
+                name="image"
+                placeholder="Image URL"
+                value={newNewsData.image}
+                onChange={handleChange}
+                className="mt-2 p-2 border rounded w-full"
+              />
+              <input
+                type="text"
+                name="category"
+                placeholder="Category"
+                value={newNewsData.category}
+                onChange={handleChange}
+                className="mt-2 p-2 border rounded w-full"
+              />
+              <div className="flex justify-end mt-4 space-x-4">
+                <button
+                  className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                  onClick={handleCloseModal}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="px-4 py-2 bg-[#E77917] text-white rounded hover:bg-[#814a1a]"
+                  onClick={handleSaveClick}
+                >
+                  {isEditMode ? "Update News" : "Create News"}
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
