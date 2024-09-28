@@ -3,10 +3,10 @@ import News from "../model/news.js";
 export const createNews = async (req, res) => {
   try {
     // Destructure the required fields from the request body
-    const { image, title, description } = req.body;
+    const { image, title, description , category } = req.body;
 
     // Check if any of the required fields are missing
-    if (!image || !title || !description) {
+    if (!image || !title || !description || !category) {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
@@ -15,13 +15,14 @@ export const createNews = async (req, res) => {
       image,
       title,
       description,
+      category
     });
 
     // Save the news to the database
     await news.save();
 
     // Return success response
-    res.status(201).json({ message: 'News created successfully', news });
+    res.status(201).json({ message: 'News created successfully', date : news });
     
   } catch (error) {
     console.error(error);
