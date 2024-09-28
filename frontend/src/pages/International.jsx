@@ -42,7 +42,7 @@ const International = () => {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen ">
       <div className="w-full max-w-7xl p-4">
         <h1 className="text-3xl font-bold text-center mb-8">
           International News

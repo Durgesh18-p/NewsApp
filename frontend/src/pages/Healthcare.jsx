@@ -42,7 +42,7 @@ const Healthcare = () => {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen ">
       <div className="w-full max-w-7xl p-4">
         <h1 className="text-3xl font-bold text-center mb-8">Healthcare News</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
