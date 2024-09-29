@@ -59,7 +59,7 @@ const NewsCarousel = () => {
   if (!newsItems.length) return <p>Loading...</p>;
 
   return (
-    <div className="relative w-full overflow-hidden p-9 border text-justify">
+    <div className="relative w-full overflow-hidden p-9 text-justify">
       <div className="w-full flex justify-center items-center flex-col mb-7">
         <h1 className="text-2xl font-semibold">More Related News</h1>
         <div className="bg-[#E77917] h-[1.5px] m-auto w-[20%]"></div>
