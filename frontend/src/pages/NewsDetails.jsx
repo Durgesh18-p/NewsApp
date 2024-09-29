@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import Loader from "../components/Loader";
 import NewsCarousel from "../components/NewsCarousel";
-import axios from "axios"; // Import Axios
+import axios from "axios";
 
 const NewsDetails = () => {
   const { id } = useParams(); // Get the news ID from the URL
@@ -17,7 +17,7 @@ const NewsDetails = () => {
     const fetchNewsDetails = async () => {
       try {
         const response = await axios.get(`http://localhost:8000/news/${id}`);
-        setNewsItem(response.data.data); // Adjust based on actual API response structure
+        setNewsItem(response.data.data); // Assuming the data structure from API
         setLoading(false);
       } catch (error) {
         console.error("Error fetching news details:", error);
@@ -29,8 +29,8 @@ const NewsDetails = () => {
       try {
         const response = await axios.get(
           `http://localhost:8000/comments/${id}`
-        ); // Fetch comments for the specific news ID
-        setComments(response.data.comments); // Set the comments state
+        );
+        setComments(response.data.comments); // Set the comments specific to the news ID
       } catch (error) {
         console.error("Error fetching comments:", error);
       }
@@ -38,12 +38,12 @@ const NewsDetails = () => {
 
     fetchNewsDetails();
     fetchComments();
-  }, [id]);
+  }, [id]); // Refetch when the news ID changes
 
-  // Function to handle new comment submission
+  // Handle new comment submission
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
-    if (!newComment.trim()) return; // Prevent submitting empty comments
+    if (!newComment.trim()) return; // Prevent empty comments
 
     try {
       const response = await axios.post(
@@ -52,10 +52,9 @@ const NewsDetails = () => {
           comment: newComment,
         }
       );
-
       if (response.status === 201) {
-        setComments((prevComments) => [...prevComments, response.data]); // Append new comment
-        setNewComment(""); // Clear the input after successful submission
+        setComments([...comments, response.data]); // Append the new comment
+        setNewComment(""); // Clear the text area
       } else {
         console.error("Failed to post comment", response.data.error);
       }
@@ -81,34 +80,28 @@ const NewsDetails = () => {
         transition={{ duration: 0.5, ease: "easeOut" }}
         className="w-full lg:w-3/4 text-justify"
       >
-        {/* Hover Scale Effect on Image */}
         <motion.img
-          src={newsItem.image} // Assuming the image URL comes from the API
+          src={newsItem.image}
           alt={newsItem.title}
           className="h-[480px] w-full object-cover mb-4 rounded-xl"
-          whileHover={{ scale: 1.02 }} // Scale effect on hover
+          whileHover={{ scale: 1.02 }}
           transition={{ duration: 0.3 }}
         />
         <h1 className="text-3xl font-bold text-gray-800 mb-4">
           {newsItem.title}
         </h1>
-
-        {/* Description without highlighted terms */}
-        <p className="text-lg font-normal text-gray-600 mb-6">
+        <p className="text-lg font-medium text-gray-600 mb-6">
           {newsItem.description}
         </p>
-
         <NewsCarousel />
       </motion.div>
 
       {/* Comment Section */}
-      <div className="w-full lg:w-1/4 mt-8 lg:mt-0 lg:pl-8 border-l border-gray-300">
-        <h2 className="text-2xl font-bold mb-4">Comments</h2>
+      <div className="w-full lg:w-1/4 mt-8 lg:mt-0 lg:pl-8 border-gray-300">
+        <h2 className="text-2xl font-bold mb-4 text-[#E77917]">Insights!</h2>
 
         {/* Comments List */}
         <div className="mb-4 max-h-[300px] overflow-y-auto">
-          {" "}
-          {/* Set a max-height for scrolling */}
           <div className="space-y-4">
             {comments.length > 0 ? (
               comments.map((comment, index) => (
@@ -116,7 +109,7 @@ const NewsDetails = () => {
                   key={index}
                   className="p-4 bg-gray-100 rounded-lg shadow-sm"
                 >
-                  <p className="text-sm text-gray-800">{comment.comment}</p>
+                  <p className="text-md text-gray-800">{comment.comment}</p>
                   <span className="text-xs text-gray-500">
                     {new Date(comment.createdAt).toLocaleString()}
                   </span>

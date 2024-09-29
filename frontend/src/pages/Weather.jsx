@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import {
@@ -9,7 +9,7 @@ import {
 } from "react-icons/fa";
 
 const Weather = () => {
-  const [city, setCity] = useState("Pune,India");
+  const [city, setCity] = useState("");
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -85,7 +85,7 @@ const Weather = () => {
 
   return (
     <motion.div
-      className="min-h-screen flex flex-col items-center justify-center p-6 bg-[#FAFAFA]"
+      className="h-[70vh] flex flex-col items-center justify-center p-6 bg-[#FAFAFA]"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -103,6 +103,7 @@ const Weather = () => {
           type="text"
           value={city}
           onChange={handleCityChange}
+          required
           placeholder="Enter city name..."
           className="p-2 border border-[#E77917] rounded-lg w-full md:w-60 text-[#130912] focus:ring-2 focus:ring-[#E77917]"
         />
@@ -163,7 +164,7 @@ const Weather = () => {
                 onClick={() => handlePredefinedCitySelect(predefinedCity)}
                 className="bg-white border border-[#E77917] shadow-md rounded-lg px-4 py-2 text-[#E77917] hover:bg-[#E77917] hover:text-white transition duration-300"
               >
-                {predefinedCity.split(",")[0]} {/* Display only city name */}
+                {predefinedCity.split(",")[0]}
               </button>
             </li>
           ))}
@@ -186,7 +187,7 @@ const RainAnimation = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 5 }} // Duration of rain animation
+      transition={{ duration: 5 }}
     >
       {[...Array(100)].map((_, index) => (
         <motion.div
@@ -204,7 +205,7 @@ const RainAnimation = () => {
             y: ["0vh", "100vh"],
           }}
           transition={{
-            duration: 1, // Rapid fall duration
+            duration: 1,
             repeat: Infinity,
             ease: "linear",
           }}
@@ -214,7 +215,6 @@ const RainAnimation = () => {
   );
 };
 
-// Sun Rays Animation Component
 const SunRaysAnimation = () => {
   return (
     <motion.div
@@ -234,12 +234,12 @@ const SunRaysAnimation = () => {
             left: `${Math.random() * 100}vw`,
             width: "8px",
             height: "10px",
-            backgroundColor: "rgba(255, 255, 0, 0.7)", // Sun rays color
+            backgroundColor: "rgba(255, 255, 0, 0.7)",
             borderRadius: "50%",
           }}
           animate={{
-            scale: [1, 1.2, 1], // Pulsating effect
-            opacity: [0.5, 1, 0.5], // Fading effect
+            scale: [1, 1.2, 1],
+            opacity: [0.5, 1, 0.5],
           }}
           transition={{
             duration: 5,

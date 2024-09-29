@@ -79,38 +79,73 @@ const Home = () => {
     }, 2000); // Simulate a 2-second delay for loading new content
   };
 
-  if (!newsData) {
-    return <Loader />;
-  }
-
   return (
     <div className="px-4 sm:px-8 md:px-16 lg:px-32 py-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {visibleNews?.map((item, index) => (
-          <motion.div
-            key={item._id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }} // Staggered animation
-          >
-            <News item={item} />
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Loader for lazy loading */}
-      {loadingMore && (
+      {loading ? (
         <div className="flex justify-center my-8">
-          <Loader />
+          <Loader /> {/* Display Loader when initially loading */}
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {visibleNews.map((item, index) => (
+            <motion.div
+              key={item._id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+            >
+              <News item={item} />
+            </motion.div>
+          ))}
         </div>
       )}
 
-      {/* Loader observer to detect when to load more */}
+      {loadingMore && (
+        <div className="flex justify-center my-8">
+          <Loader /> {/* Display Loader while lazy loading more news */}
+        </div>
+      )}
+
       {!loading && newsData.length > visibleNews.length && (
         <div ref={loaderRef} className="h-8"></div>
       )}
     </div>
   );
+  // return (
+  //   <div className="px-4 sm:px-8 md:px-16 lg:px-32 py-8">
+  //     {/* Show the Loader while the news is being fetched */}
+  //     {loading ? (
+  //       <div className="flex justify-center my-8">
+  //         <Loader />
+  //       </div>
+  //     ) : (
+  //       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+  //         {visibleNews?.map((item, index) => (
+  //           <motion.div
+  //             key={item._id}
+  //             initial={{ opacity: 0, y: 10 }}
+  //             animate={{ opacity: 1, y: 0 }}
+  //             transition={{ delay: index * 0.1 }} // Staggered animation
+  //           >
+  //             <News item={item} />
+  //           </motion.div>
+  //         ))}
+  //       </div>
+  //     )}
+
+  //     {/* Loader for lazy loading */}
+  //     {loadingMore && (
+  //       <div className="flex justify-center my-8">
+  //         <Loader />
+  //       </div>
+  //     )}
+
+  //     {/* Loader observer to detect when to load more */}
+  //     {!loading && newsData.length > visibleNews.length && (
+  //       <div ref={loaderRef} className="h-8"></div>
+  //     )}
+  //   </div>
+  // );
 };
 
 export default Home;
