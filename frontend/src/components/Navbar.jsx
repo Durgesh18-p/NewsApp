@@ -107,7 +107,7 @@ const Navbar = () => {
         <div className="flex items-center text-[#130912] text-lg font-semibold">
           <div className="items-center lg:block hidden">
             <Link
-              to="/"
+              to="/weather"
               className="flex items-center hover:underline text-[#130912] hover:underline-[#E77917] transition duration-300"
             >
               <TiWeatherPartlySunny className="text-[#E77917] h-6 w-6 mr-1" />
@@ -147,7 +147,7 @@ const Navbar = () => {
           <div className="text-lg font-semibold">{currentTime}</div> |
           <div className="flex justify-center items-center gap-1">
             <Link
-              to="/"
+              to="/weather"
               className="block text-[#130912] hover:underline-[#E77917] text-xl font-semibold"
             >
               Weather

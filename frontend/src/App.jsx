@@ -14,6 +14,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Admin from "./admin/Admin";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
+import Weather from "./pages/Weather";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/all" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/weather" element={<Weather />} />
         <Route
           path="/admin-panel"
           element={
