@@ -15,7 +15,8 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
 
-  const role = localStorage.getItem("role");
+  const isAdmin = Cookies.get("admin") === "true"; // Check admin status from cookie
+
   // Function to get the current time and day
   const updateTime = () => {
     const now = new Date();
@@ -49,6 +50,7 @@ const Navbar = () => {
         const data = await response.json();
         toast.success(data.message || "Logged out successfully."); // Show success message
         Cookies.remove("token"); // Remove token from cookies
+        Cookies.remove("admin"); // Remove admin status from cookies
         setIsLoggedIn(false); // Update login state
         setIsPopupVisible(false); // Close popup
         navigate("/"); // Redirect to home page
@@ -63,7 +65,7 @@ const Navbar = () => {
   };
 
   const renderAdminLink = () => {
-    if (role === "admin") {
+    if (isAdmin) {
       return (
         <Link to="/admin-panel" className="ml-3 ">
           Admin

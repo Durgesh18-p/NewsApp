@@ -39,11 +39,11 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[#FAFAFA] p-4">
+    <div className="flex items-center justify-center min-screen bg-[#FAFAFA] p-4">
       <Toaster position="top-center" reverseOrder={false} />{" "}
       {/* Add toaster here */}
       <motion.div
-        className="bg-white shadow-md rounded-lg p-8 max-w-sm w-full"
+        className="bg-white shadow-xl rounded-lg p-8 max-w-sm w-full"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ duration: 0.5 }}

@@ -1,8 +1,8 @@
-// components/Login.jsx
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { toast, Toaster } from "react-hot-toast"; // Import toast
+import Cookies from "js-cookie"; // Import js-cookie for cookie management
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -12,9 +12,7 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    if (email === "suryadurgesh18@gmail.com") {
-      localStorage.setItem("role", "admin");
-    }
+
     try {
       const response = await fetch("http://localhost:8000/user/login", {
         method: "POST",
@@ -36,10 +34,15 @@ const Login = () => {
         60 * 60
       }; SameSite=Strict`;
 
+      // If user is admin, store admin status in a cookie
+      if (email === "suryadurgesh18@gmail.com") {
+        Cookies.set("admin", "true", { path: "/", sameSite: "Strict" });
+      }
+
       // Show success toast notification
       toast.success("Logged in successfully!");
 
-      // Redirect to categories page or dashboard
+      // Redirect to home or dashboard
       window.location.href = "/";
     } catch (error) {
       setError(error.message);
@@ -47,11 +50,11 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[#FAFAFA] p-4">
+    <div className="flex items-center justify-center min-screen bg-[#FAFAFA] p-4">
       <Toaster position="top-center" reverseOrder={false} />{" "}
       {/* Add toaster here */}
       <motion.div
-        className="bg-white shadow-md rounded-lg p-8 max-w-sm w-full"
+        className="bg-white shadow-xl rounded-lg p-8 max-w-sm w-full"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ duration: 0.5 }}

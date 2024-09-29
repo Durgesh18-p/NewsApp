@@ -13,6 +13,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Admin from "./admin/Admin";
+import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
 
 const App = () => {
   return (
@@ -23,7 +24,14 @@ const App = () => {
         <Route path="/all" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/admin-panel" element={<Admin />} />
+        <Route
+          path="/admin-panel"
+          element={
+            <ProtectedAdminRoute>
+              <Admin />
+            </ProtectedAdminRoute>
+          }
+        />
         <Route
           path="/news/:id"
           element={

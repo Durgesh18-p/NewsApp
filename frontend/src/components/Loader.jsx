@@ -17,7 +17,7 @@ const Loader = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen w-screen bg-[#FAFAFA]">
+    <div className="flex flex-col justify-center items-center h-[500px] w-screen bg-[#FAFAFA]">
       {/* Loading Text */}
       <h1 className="text-2xl font-bold text-[##130912] mb-8">
         Loading News....
