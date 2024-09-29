@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import router from "./routes/newsRoutes.routes.js";
 import adminRouter from "./routes/admin.routes.js";
 import userRoutes from "./routes/authentication.routes.js";
+import commentRouter from "./routes/comments.routes.js";
 import cors from "cors";
 
 dotenv.config(); 
@@ -23,6 +24,7 @@ app.use(cors({
 app.use('/news', router);
 app.use('/admin', adminRouter);
 app.use('/user', userRoutes)
+app.use('/comments', commentRouter)
 
 const PORT = process.env.PORT || 8000;
 const HOST = process.env.HOST
