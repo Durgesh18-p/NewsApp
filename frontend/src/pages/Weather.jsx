@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import {
@@ -13,6 +13,7 @@ const Weather = () => {
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const inputRef = useRef(null); // Create a ref for the input
 
   const predefinedCities = [
     "Mumbai,India",
@@ -37,7 +38,7 @@ const Weather = () => {
         shortColumnNames: "false",
       },
       headers: {
-        "x-rapidapi-key": "547c74bcdemsh8baed559c58e1fdp113009jsn7c1bf6864d95", // Replace with your API key
+        "x-rapidapi-key": "547c74bcdemsh8baed559c58e1fdp113009jsn7c1bf6864d95", 
         "x-rapidapi-host": "visual-crossing-weather.p.rapidapi.com",
       },
     };
@@ -67,6 +68,9 @@ const Weather = () => {
   const handlePredefinedCitySelect = (selectedCity) => {
     setCity(selectedCity);
     fetchWeather(selectedCity);
+    if (inputRef.current) {
+      inputRef.current.focus(); // Refocus the input after selecting a city
+    }
   };
 
   const getWeatherCondition = () => {
@@ -85,7 +89,7 @@ const Weather = () => {
 
   return (
     <motion.div
-      className="h-[70vh] flex flex-col items-center justify-center p-6 bg-[#FAFAFA]"
+      className="h-[100vh] flex flex-col items-center justify-center p-6 bg-[#FAFAFA]"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -103,6 +107,7 @@ const Weather = () => {
           type="text"
           value={city}
           onChange={handleCityChange}
+          ref={inputRef} // Attach ref to the input
           required
           placeholder="Enter city name..."
           className="p-2 border border-[#E77917] rounded-lg w-full md:w-60 text-[#130912] focus:ring-2 focus:ring-[#E77917]"
@@ -115,9 +120,8 @@ const Weather = () => {
         </button>
       </form>
 
-      {/* Show loading or error */}
       {loading ? (
-        <p className="text-lg text-[#130912]">Loading...</p>
+        <p className="text-lg text-[#130912] font-semibold">Loading...</p>
       ) : error ? (
         <p className="text-lg text-red-500">{error}</p>
       ) : (
@@ -130,7 +134,7 @@ const Weather = () => {
             transition={{ duration: 0.5 }}
           >
             <h2 className="text-2xl font-semibold text-center text-[#130912] mb-4">
-              {city.split(",")[0]} Weather {/* Display City Name */}
+              {city.split(",")[0]} Weather 
             </h2>
             <p className="text-lg text-center text-[#130912]">
               <FaThermometerHalf className="inline-block text-[#E77917] mr-2" />
@@ -154,7 +158,6 @@ const Weather = () => {
         )
       )}
 
-      {/* Predefined City Selection */}
       <div className="mt-6">
         <h2 className="text-xl text-[#130912]">Select a city:</h2>
         <ul className="flex flex-wrap gap-4 mt-2">
@@ -171,7 +174,6 @@ const Weather = () => {
         </ul>
       </div>
 
-      {/* Conditional Animations */}
       {weatherCondition === "rain" && <RainAnimation />}
       {weatherCondition === "sunny" && <SunRaysAnimation />}
       {weatherCondition === "snow" && <SnowAnimation />}
@@ -179,7 +181,6 @@ const Weather = () => {
   );
 };
 
-// Rain Animation Component
 const RainAnimation = () => {
   return (
     <motion.div
@@ -252,7 +253,6 @@ const SunRaysAnimation = () => {
   );
 };
 
-// Snow Animation Component
 const SnowAnimation = () => {
   return (
     <motion.div
@@ -260,7 +260,7 @@ const SnowAnimation = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 5 }} // Duration of snow animation
+      transition={{ duration: 5 }} 
     >
       {[...Array(50)].map((_, index) => (
         <motion.div
@@ -270,16 +270,14 @@ const SnowAnimation = () => {
             position: "absolute",
             top: `${Math.random() * -50}px`,
             left: `${Math.random() * 100}vw`,
-            width: "5px",
-            height: "5px",
-            backgroundColor: "blue", // Changed to blue for snow
+            width: "5px",// Changed to blue for snow
             borderRadius: "50%",
           }}
           animate={{
             y: ["-50px", "100vh"],
           }}
           transition={{
-            duration: 6, // Slow fall duration
+            duration: 6, 
             repeat: Infinity,
             ease: "linear",
           }}
