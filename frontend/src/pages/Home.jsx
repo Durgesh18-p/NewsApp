@@ -47,7 +47,7 @@ const Home = () => {
       loadMoreNews();
     }
   };
- console.log(newsData)
+//  console.log(newsData)
   // Fetch all news data initially
   const fetchNews = async () => {
     try {
