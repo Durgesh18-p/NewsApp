@@ -17,7 +17,7 @@ const Login = () => {
     toast.loading("Logging in, hang tight...");
 
     try {
-      const response = await fetch("http://localhost:8000/user/login", {
+      const response = await fetch("https://newsapp-vfx1.onrender.com/user/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

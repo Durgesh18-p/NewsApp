@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.use(cors({
-  origin: 'http://localhost:5173', 
+  origin: 'https://newsapp-vfx1.onrender.com', 
   methods: ['GET', 'POST', 'PUT', 'DELETE'], 
   credentials: true 
 }));
@@ -32,8 +32,8 @@ const HOST = process.env.HOST
 app.listen(PORT , async () => {
   try {
     await connectDB(); 
-    // console.log(`Server running on http://${HOST}:${PORT}`);
-    console.log(`server running on http://localhost:${PORT}`);
+    console.log(`Server running on http://${HOST}:${PORT}`);
+    // console.log(`server running on http://localhost:${PORT}`);
     
   } catch (error) {
     console.error('Error starting the server:', error);

@@ -32,7 +32,7 @@ const Admin = () => {
 
   const fetchNews = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/news");
+      const response = await axios.get("https://newsapp-vfx1.onrender.com/news");
       if (response.data.success && Array.isArray(response.data.data)) {
         setNews(response.data.data);
       } else {
@@ -63,7 +63,7 @@ const Admin = () => {
   const handleDeleteClick = async (id) => {
     if (window.confirm("Are you sure you want to delete this news?")) {
       try {
-        await axios.delete(`http://localhost:8000/admin/${id}`);
+        await axios.delete(`https://newsapp-vfx1.onrender.com/admin/${id}`);
         toast.success("News deleted successfully.");
         fetchNews();
       } catch (error) {
@@ -81,7 +81,7 @@ const Admin = () => {
     if (isEditMode) {
       try {
         await axios.put(
-          `http://localhost:8000/admin/${currentNews._id}`,
+          `https://newsapp-vfx1.onrender.com/admin/${currentNews._id}`,
           newNewsData
         );
         toast.success("News updated successfully.");
@@ -93,7 +93,7 @@ const Admin = () => {
       }
     } else {
       try {
-        await axios.post("http://localhost:8000/news", newNewsData);
+        await axios.post("https://newsapp-vfx1.onrender.com/news", newNewsData);
         toast.success("News created successfully.");
         fetchNews();
       } catch (error) {

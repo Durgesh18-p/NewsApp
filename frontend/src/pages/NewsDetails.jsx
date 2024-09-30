@@ -23,7 +23,7 @@ const NewsDetails = () => {
   useEffect(() => {
     const fetchNewsDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/news/${id}`);
+        const response = await axios.get(`https://newsapp-vfx1.onrender.com/news/${id}`);
         setNewsItem(response.data.data);
         setLoading(false);
       } catch (error) {
@@ -34,7 +34,7 @@ const NewsDetails = () => {
 
     const fetchComments = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/comments/${id}`);
+        const response = await axios.get(`https://newsapp-vfx1.onrender.com/comments/${id}`);
         setComments(response.data.comments);
       } catch (error) {
         console.error("Error fetching comments:", error);
@@ -52,7 +52,7 @@ const NewsDetails = () => {
     setIsSubmitting(true); // Set submitting state
 
     try {
-      const response = await axios.post(`http://localhost:8000/comments/${id}`, {
+      const response = await axios.post(`https://newsapp-vfx1.onrender.com/comments/${id}`, {
         comment: newComment,
       });
 
