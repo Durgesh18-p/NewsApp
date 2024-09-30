@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link ,useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaUserCircle, FaBars } from "react-icons/fa"; // Import icons
 import logo from "/logo-nav.png";
@@ -67,7 +67,7 @@ const Navbar = () => {
   const renderAdminLink = () => {
     if (isAdmin) {
       return (
-        <a href="/admin-panel" className="ml-3 ">
+        <Link to="/admin-panel" className="ml-3 ">
           Admin
         </a>
       );
@@ -99,20 +99,20 @@ const Navbar = () => {
           </div>
         </div>
 
-        <a href={"/"} className="flex-grow flex justify-center">
+        <Link to={"/"} className="flex-grow flex justify-center">
           <img src={logo} alt="Logo" className="h-[70px] w-[160px]" />
-        </a>
+        </Link>
 
         {/* Right side: Weather and User Icon */}
         <div className="flex items-center text-[#130912] text-lg font-semibold">
           <div className="items-center lg:block hidden">
-            <a
-              href="/weather"
+            <Link
+              to={"/weather"}
               className="flex items-center hover:underline text-[#130912] hover:underline-[#E77917] transition duration-300"
             >
               <TiWeatherPartlySunny className="text-[#E77917] h-6 w-6 mr-1" />
               Weather
-            </a>
+            </Link>
           </div>
           {<div>{renderAdminLink()}</div>}
 
@@ -146,12 +146,12 @@ const Navbar = () => {
         <div className="md:hidden p-4 bg-[#FAFAFA] shadow-md flex justify-center items-center gap-2">
           <div className="text-lg font-semibold">{currentTime}</div> |
           <div className="flex justify-center items-center gap-1">
-            <a
-              href="/weather"
+            <Link
+              href={"/weather"}
               className="block text-[#130912] hover:underline-[#E77917] text-xl font-semibold"
             >
               Weather
-            </a>
+            </Link>
             <TiWeatherPartlySunny className="mt-1 text-[#E77917]" />
           </div>
         </div>
