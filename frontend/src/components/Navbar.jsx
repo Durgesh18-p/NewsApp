@@ -69,7 +69,7 @@ const Navbar = () => {
       return (
         <Link to="/admin-panel" className="ml-3 ">
           Admin
-        </a>
+        </Link>
       );
     }
     return null; // Return null if the condition is not met
