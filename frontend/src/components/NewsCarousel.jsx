@@ -53,7 +53,7 @@ const NewsCarousel = () => {
   };
 
   const openNewsDetails = (id) => {
-    navigate(`https://newsapp-vfx1.onrender.com/news/${id}`);
+    navigate(`/news/${id}`);
   };
 
   if (!newsItems.length) return <p>Loading...</p>;
