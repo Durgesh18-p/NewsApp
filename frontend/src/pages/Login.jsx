@@ -1,17 +1,20 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { toast, Toaster } from "react-hot-toast"; // Import toast
-import Cookies from "js-cookie"; // Import js-cookie for cookie management
+import { toast, Toaster } from "react-hot-toast"; 
+import Cookies from "js-cookie"; 
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); // Loader state
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true); // Start loading
+    toast.loading("Logging in, hang tight...");
 
     try {
       const response = await fetch("http://localhost:8000/user/login", {
@@ -29,10 +32,8 @@ const Login = () => {
 
       const data = await response.json();
 
-      // Save the JWT token in a cookie or local storage
-      document.cookie = `token=${data.token}; path=/; max-age=${
-        60 * 60
-      }; SameSite=Strict`;
+      // Save the JWT token in a cookie
+      document.cookie = `token=${data.token}; path=/; max-age=${60 * 60}; SameSite=Strict`;
 
       // If user is admin, store admin status in a cookie
       if (email === "suryadurgesh18@gmail.com") {
@@ -40,32 +41,38 @@ const Login = () => {
       }
 
       // Show success toast notification
+      toast.dismiss();
       toast.success("Logged in successfully!");
 
       // Redirect to home or dashboard
-      window.location.href = "/";
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1000);
     } catch (error) {
       setError(error.message);
+      toast.dismiss();
+      toast.error(error.message); // Error toast
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
   return (
     <div className="flex items-center justify-center min-screen bg-[#FAFAFA] p-4">
-      <Toaster position="top-center" reverseOrder={false} />{" "}
-      {/* Add toaster here */}
+      <Toaster position="top-center" reverseOrder={false} />
       <motion.div
         className="bg-white shadow-xl rounded-lg p-8 max-w-sm w-full"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <h2 className="text-center text-2xl font-semibold text-[#130912] mb-6">
+        <h2 className="text-center text-3xl font-bold text-[#130912] mb-6">
           Login
         </h2>
         {error && <p className="text-red-500 text-center">{error}</p>}
         <form onSubmit={handleLogin}>
           <div className="mb-4">
-            <label className="block text-[#130912] mb-1" htmlFor="email">
+            <label className="block font-semibold text-[#130912] mb-1" htmlFor="email">
               Email
             </label>
             <input
@@ -75,11 +82,12 @@ const Login = () => {
               onChange={(e) => setEmail(e.target.value)}
               className="w-full border border-[#E77917] rounded-lg p-2"
               required
-              placeholder="Enter your email"
+              placeholder="Enter your email ..."
+              disabled={loading}
             />
           </div>
           <div className="mb-4 relative">
-            <label className="block text-[#130912] mb-1" htmlFor="password">
+            <label className="block font-semibold text-[#130912] mb-1" htmlFor="password">
               Password
             </label>
             <input
@@ -89,7 +97,8 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full border border-[#E77917] rounded-lg p-2"
               required
-              placeholder="Enter your password"
+              placeholder="Enter your password ..."
+              disabled={loading} 
             />
             <button
               type="button"
@@ -105,9 +114,10 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-[#E77917] text-white font-semibold rounded-lg py-2 hover:bg-[#130912] transition"
+            className={`w-full bg-[#E77917] text-white font-semibold rounded-lg py-2 hover:bg-[#130912] transition ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            disabled={loading} 
           >
-            Login
+            {loading ? "Logging in..." : "Login"} 
           </button>
         </form>
         <p className="text-center text-[#130912] mt-4">

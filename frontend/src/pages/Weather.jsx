@@ -69,7 +69,7 @@ const Weather = () => {
     setCity(selectedCity);
     fetchWeather(selectedCity);
     if (inputRef.current) {
-      inputRef.current.focus(); // Refocus the input after selecting a city
+      inputRef.current.focus(); 
     }
   };
 
@@ -107,7 +107,7 @@ const Weather = () => {
           type="text"
           value={city}
           onChange={handleCityChange}
-          ref={inputRef} // Attach ref to the input
+          ref={inputRef} 
           required
           placeholder="Enter city name..."
           className="p-2 border border-[#E77917] rounded-lg w-full md:w-60 text-[#130912] focus:ring-2 focus:ring-[#E77917]"
@@ -159,7 +159,7 @@ const Weather = () => {
       )}
 
       <div className="mt-6">
-        <h2 className="text-xl text-[#130912]">Select a city:</h2>
+        <h2 className="text-xl text-[#130912] font-semibold">Select a city:</h2>
         <ul className="flex flex-wrap gap-4 mt-2">
           {predefinedCities.map((predefinedCity) => (
             <li key={predefinedCity}>

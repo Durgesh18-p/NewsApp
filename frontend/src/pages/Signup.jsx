@@ -1,8 +1,7 @@
-// components/Signup.jsx
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { toast, Toaster } from "react-hot-toast"; // Import toast
+import { toast, Toaster } from "react-hot-toast"; 
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -10,9 +9,12 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); // Loader state
 
   const handleSignup = async (e) => {
     e.preventDefault();
+    setLoading(true); // Start loading
+    toast.loading("Saving your data, hang tight...");
 
     try {
       const response = await fetch("http://localhost:8000/user/signup", {
@@ -29,32 +31,38 @@ const Signup = () => {
       }
 
       // Show success toast notification
+      toast.dismiss();
       toast.success("Signed up successfully!");
 
       // Redirect to login page
-      window.location.href = "/login";
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 1000);
     } catch (error) {
       setError(error.message);
+      toast.dismiss();
+      toast.error(error.message); // Error toast
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
   return (
     <div className="flex items-center justify-center min-screen bg-[#FAFAFA] p-4">
-      <Toaster position="top-center" reverseOrder={false} />{" "}
-      {/* Add toaster here */}
+      <Toaster position="top-center" reverseOrder={false} />
       <motion.div
         className="bg-white shadow-xl rounded-lg p-8 max-w-sm w-full"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <h2 className="text-center text-2xl font-semibold text-[#130912] mb-6">
+        <h2 className="text-center text-2xl font-bold text-[#130912] mb-6">
           Sign Up
         </h2>
         {error && <p className="text-red-500 text-center">{error}</p>}
         <form onSubmit={handleSignup}>
           <div className="mb-4">
-            <label className="block text-[#130912] mb-1" htmlFor="name">
+            <label className="block font-semibold text-[#130912] mb-1" htmlFor="name">
               Name
             </label>
             <input
@@ -65,10 +73,11 @@ const Signup = () => {
               className="w-full border border-[#E77917] rounded-lg p-2"
               required
               placeholder="Enter your name"
+              disabled={loading} // Disable input during loading
             />
           </div>
           <div className="mb-4">
-            <label className="block text-[#130912] mb-1" htmlFor="email">
+            <label className="block font-semibold text-[#130912] mb-1" htmlFor="email">
               Email
             </label>
             <input
@@ -79,10 +88,11 @@ const Signup = () => {
               className="w-full border border-[#E77917] rounded-lg p-2"
               required
               placeholder="Enter your email"
+              disabled={loading} // Disable input during loading
             />
           </div>
           <div className="mb-4 relative">
-            <label className="block text-[#130912] mb-1" htmlFor="password">
+            <label className="block font-semibold text-[#130912] mb-1" htmlFor="password">
               Password
             </label>
             <input
@@ -93,6 +103,7 @@ const Signup = () => {
               className="w-full border border-[#E77917] rounded-lg p-2"
               required
               placeholder="Enter your password"
+              disabled={loading} // Disable input during loading
             />
             <button
               type="button"
@@ -108,9 +119,10 @@ const Signup = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-[#E77917] text-white font-semibold rounded-lg py-2 hover:bg-[#130912] transition"
+            className={`w-full bg-[#E77917] text-white font-semibold rounded-lg py-2 hover:bg-[#130912] transition ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            disabled={loading} // Disable button during loading
           >
-            Sign Up
+            {loading ? "Saving..." : "Sign Up"} {/* Change text during loading */}
           </button>
         </form>
         <p className="text-center text-[#130912] mt-4">
