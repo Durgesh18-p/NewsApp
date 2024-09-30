@@ -53,8 +53,10 @@ const NewsCarousel = () => {
   };
 
   const openNewsDetails = (id) => {
+    console.log("Navigating to news with id:", id); 
     navigate(`/news/${id}`);
-  };
+};
+
 
   if (!newsItems.length) return <p>Loading...</p>;
 
