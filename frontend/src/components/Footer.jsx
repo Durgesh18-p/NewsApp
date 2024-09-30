@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   FaLinkedin,
@@ -13,12 +13,9 @@ const Footer = () => {
   // State to control the popup visibility
   const [isPopupVisible, setIsPopupVisible] = useState(false);
 
-  // Function to show the popup and set a timeout to close it
-  const showPopup = () => {
-    setIsPopupVisible(true);
-    setTimeout(() => {
-      setIsPopupVisible(false);
-    }, 3000); // Close after 3 seconds
+  // Function to toggle popup visibility
+  const togglePopup = () => {
+    setIsPopupVisible((prev) => !prev);
   };
 
   return (
@@ -129,16 +126,16 @@ const Footer = () => {
 
           {/* More Work link to trigger popup */}
           <motion.p
-            onHoverStart={showPopup} // Show popup on click
+            onClick={togglePopup} // Show popup on click
             className="hover:underline hover:text-[#E77917] transition-colors duration-300 cursor-pointer"
             whileHover={{ color: "#E77917" }}
           >
             More Work
           </motion.p>
 
-          {/* Popup for desktop view */}
+          {/* Popup for desktop and mobile view */}
           {isPopupVisible && (
-            <div className="absolute bottom-5 lg:right-48 right-2  bg-[#130912] p-4 rounded-lg shadow-lg z-10 border-[#E77917] border-[1px] w-[230px]">
+            <div className="absolute bottom-5 lg:right-48 right-2 bg-[#130912] p-4 rounded-lg shadow-lg z-10 border-[#E77917] border-[1px] w-[230px]">
               <h3 className="text-xl font-semibold mb-2">Check out my work!</h3>
               <motion.a
                 href="https://video-content-app.netlify.app/"
@@ -146,6 +143,7 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className="flex items-center text-[#FAFAFA] hover:text-[#E77917] transition-colors duration-300"
                 whileHover={{ color: "#E77917" }}
+                onClick={togglePopup} // Close popup when the link is clicked
               >
                 <FaExternalLinkAlt className="mr-2" />
                 Visit Content Hub
