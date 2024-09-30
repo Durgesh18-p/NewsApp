@@ -147,7 +147,7 @@ const Navbar = () => {
           <div className="text-lg font-semibold">{currentTime}</div> |
           <div className="flex justify-center items-center gap-1">
             <Link
-              href={"/weather"}
+              to={"/weather"}
               className="block text-[#130912] hover:underline-[#E77917] text-xl font-semibold"
             >
               Weather
