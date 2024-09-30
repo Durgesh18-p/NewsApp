@@ -53,10 +53,11 @@ const NewsCarousel = () => {
   };
 
   const openNewsDetails = (id) => {
-    console.log("Navigating to news with id:", id); 
+    window.scrollTo(0, 0); // Scrolls to the top of the page
+    
+    // Navigate to the news details page
     navigate(`/news/${id}`);
-};
-
+  };
 
   if (!newsItems.length) return <p>Loading...</p>;
 
@@ -73,7 +74,7 @@ const NewsCarousel = () => {
       >
         <button
           onClick={goToPrev}
-          className="pointer-events-auto bg-[#E77917] text-white p-2 rounded-full absolute left-4   z-20 hover:bg-[#f3ae71] transition duration-300"
+          className="pointer-events-auto bg-[#E77917] text-white p-2 rounded-full absolute left-4 z-20 hover:bg-[#f3ae71] transition duration-300"
         >
           <FaChevronLeft size={20} />
         </button>
