@@ -5,19 +5,26 @@ import Loader from "../components/Loader";
 import NewsCarousel from "../components/NewsCarousel";
 import axios from "axios";
 
+// List of emojis for the dropdown
+const emojiList = [
+  '😀', '😂', '😃', '😄', '😅', '😇', '😉', '😊', '😋', '😎', 
+  '😍', '😢', '😡', '🥳', '🤔', '😱', '🤗', '😴', '😵', '💔' , '👍'
+];
+
 const NewsDetails = () => {
-  const { id } = useParams(); // Get the news ID from the URL
+  const { id } = useParams();
   const [newsItem, setNewsItem] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [comments, setComments] = useState([]); // State to store comments
-  const [newComment, setNewComment] = useState(""); // State for the new comment
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState("");
+  const [showEmojiDropdown, setShowEmojiDropdown] = useState(false); // State for showing/hiding emoji dropdown
+  const [isSubmitting, setIsSubmitting] = useState(false); // State for submitting comments
 
-  // Fetch news details and comments
   useEffect(() => {
     const fetchNewsDetails = async () => {
       try {
         const response = await axios.get(`http://localhost:8000/news/${id}`);
-        setNewsItem(response.data.data); // Assuming the data structure from API
+        setNewsItem(response.data.data);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching news details:", error);
@@ -27,10 +34,8 @@ const NewsDetails = () => {
 
     const fetchComments = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8000/comments/${id}`
-        );
-        setComments(response.data.comments); // Set the comments specific to the news ID
+        const response = await axios.get(`http://localhost:8000/comments/${id}`);
+        setComments(response.data.comments);
       } catch (error) {
         console.error("Error fetching comments:", error);
       }
@@ -38,29 +43,35 @@ const NewsDetails = () => {
 
     fetchNewsDetails();
     fetchComments();
-  }, [id]); // Refetch when the news ID changes
+  }, [id]);
 
-  // Handle new comment submission
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
-    if (!newComment.trim()) return; // Prevent empty comments
+    if (!newComment.trim()) return;
+
+    setIsSubmitting(true); // Set submitting state
 
     try {
-      const response = await axios.post(
-        `http://localhost:8000/comments/${id}`,
-        {
-          comment: newComment,
-        }
-      );
+      const response = await axios.post(`http://localhost:8000/comments/${id}`, {
+        comment: newComment,
+      });
+
       if (response.status === 201) {
-        setComments([...comments, response.data]); // Append the new comment
-        setNewComment(""); // Clear the text area
+        setComments((prevComments) => [...prevComments, response.data]);
+        setNewComment("");
       } else {
         console.error("Failed to post comment", response.data.error);
       }
     } catch (error) {
       console.error("Error submitting comment:", error);
+    } finally {
+      setIsSubmitting(false); // Reset submitting state
     }
+  };
+
+  const handleEmojiClick = (emoji) => {
+    setNewComment((prevComment) => prevComment + emoji);
+    setShowEmojiDropdown(false); // Close dropdown after selecting emoji
   };
 
   if (loading) {
@@ -73,7 +84,6 @@ const NewsDetails = () => {
 
   return (
     <div className="flex flex-col lg:flex-row lg:justify-between max-w-7xl mx-auto p-4 lg:p-8">
-      {/* News Content */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -96,20 +106,17 @@ const NewsDetails = () => {
         <NewsCarousel />
       </motion.div>
 
-      {/* Comment Section */}
-      <div className="w-full lg:w-1/4 mt-8 lg:mt-0 lg:pl-8 border-gray-300">
-        <h2 className="text-2xl font-bold mb-4 text-[#E77917]">Insights!</h2>
-
-        {/* Comments List */}
+      <div className="w-full lg:w-1/4 mt-8 lg:mt-0 lg:pl-8 border-gray-300 relative"> {/* Add relative positioning */}
+        <h2 className="text-2xl font-semibold mb-4 text-[#E77917]">Observed any Insights? Post here!</h2>
         <div className="mb-4 max-h-[300px] overflow-y-auto">
           <div className="space-y-4">
             {comments.length > 0 ? (
               comments.map((comment, index) => (
                 <div
                   key={index}
-                  className="p-4 bg-gray-100 rounded-lg shadow-sm"
+                  className="p-4 bg-gray-200 rounded-lg shadow-sm"
                 >
-                  <p className="text-md text-gray-800">{comment.comment}</p>
+                  <p className="text-lg font-medium text-gray-800">{comment.comment}</p>
                   <span className="text-xs text-gray-500">
                     {new Date(comment.createdAt).toLocaleString()}
                   </span>
@@ -124,7 +131,6 @@ const NewsDetails = () => {
           </div>
         </div>
 
-        {/* Comment Form */}
         <form
           onSubmit={handleCommentSubmit}
           className="flex flex-col space-y-4"
@@ -132,17 +138,42 @@ const NewsDetails = () => {
           <textarea
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
-            className="p-3 border border-gray-300 rounded-lg"
+            className="p-3 border border-gray-300 rounded-lg font-semibold"
             placeholder="Add an insight..."
             rows="3"
             required
           />
-          <button
-            type="submit"
-            className="self-end px-6 py-2 bg-[#E77917] text-white font-semibold rounded-lg shadow hover:bg-[#fc9033] transition"
-          >
-            Post Insight
-          </button>
+          <div className="flex items-center space-x-4">
+            <button
+              type="button"
+              onClick={() => setShowEmojiDropdown(!showEmojiDropdown)}
+              className="px-4 py-2 bg-gray-200 text-black font-semibold rounded-lg shadow transition"
+            >
+              {showEmojiDropdown ? "Close Emoji" : "Add Emoji"}
+            </button>
+            {showEmojiDropdown && (
+              <div className="absolute z-10 bg-white border rounded shadow-lg mt-[200px]  w-full"> {/* Use full width */}
+                <div className="flex flex-wrap p-2 justify-center"> {/* Center emojis */}
+                  {emojiList.map((emoji, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleEmojiClick(emoji)}
+                      className="p-1 text-lg"
+                    >
+                      {emoji}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+            <button
+              type="submit"
+              className={`px-6 py-2 bg-[#E77917] text-white font-semibold rounded-lg shadow hover:bg-[#fc9033] transition ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
+              disabled={isSubmitting} // Disable button while submitting
+            >
+              {isSubmitting ? "Posting..." : "Post Insight"}
+            </button>
+          </div>
         </form>
       </div>
     </div>

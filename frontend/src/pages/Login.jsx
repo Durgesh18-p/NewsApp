@@ -9,11 +9,11 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false); // Loader state
+  const [loading, setLoading] = useState(false); 
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true); // Start loading
+    setLoading(true); 
     toast.loading("Logging in, hang tight...");
 
     try {
