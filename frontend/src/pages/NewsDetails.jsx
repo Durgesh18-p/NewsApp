@@ -42,8 +42,10 @@ const NewsDetails = () => {
   useEffect(() => {
     const fetchNewsDetails = async () => {
       try {
-        // const response = await axios.get(`https://newsapp-vfx1.onrender.com/news/${id}`);
-        const response = await axios.get(`http://localhost:8000/news/${id}`);
+        const response = await axios.get(
+          `https://newsapp-vfx1.onrender.com/news/${id}`
+        );
+        // const response = await axios.get(`http://localhost:8000/news/${id}`);
         setNewsItem(response.data.data);
         setLoading(false);
       } catch (error) {
