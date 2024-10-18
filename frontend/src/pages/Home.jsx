@@ -47,11 +47,13 @@ const Home = () => {
       loadMoreNews();
     }
   };
-//  console.log(newsData)
+  //  console.log(newsData)
   // Fetch all news data initially
   const fetchNews = async () => {
     try {
       const { data } = await axios.get(`https://newsapp-vfx1.onrender.com/news`);
+      // const { data } = await axios.get("http://localhost:8000/news");
+      console.log(data);
       setNewsData(data.data); // Store all news items
       setVisibleNews(data.data.slice(0, NEWS_PER_PAGE)); // Show the first 6 news items
       setLoading(false); // Stop initial loading

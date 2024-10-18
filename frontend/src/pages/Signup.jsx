@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { toast, Toaster } from "react-hot-toast"; 
+import { toast, Toaster } from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,13 +19,24 @@ const Signup = () => {
     toast.loading("Saving your data, hang tight...");
 
     try {
-      const response = await fetch("https://newsapp-vfx1.onrender.com/user/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, email, password }),
-      });
+      const response = await fetch(
+        "https://newsapp-vfx1.onrender.com/user/signup",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, email, password }),
+        }
+      );
+
+      // const response = await fetch("https://localhost:8000/user/signup", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({ name, email, password }),
+      // });
 
       if (!response.ok) {
         const data = await response.json();
@@ -36,7 +49,7 @@ const Signup = () => {
 
       // Redirect to login page
       setTimeout(() => {
-        window.location.href = "/login";
+        navigate("/login");
       }, 1000);
     } catch (error) {
       setError(error.message);
@@ -62,7 +75,10 @@ const Signup = () => {
         {error && <p className="text-red-500 text-center">{error}</p>}
         <form onSubmit={handleSignup}>
           <div className="mb-4">
-            <label className="block font-semibold text-[#130912] mb-1" htmlFor="name">
+            <label
+              className="block font-semibold text-[#130912] mb-1"
+              htmlFor="name"
+            >
               Name
             </label>
             <input
@@ -77,7 +93,10 @@ const Signup = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block font-semibold text-[#130912] mb-1" htmlFor="email">
+            <label
+              className="block font-semibold text-[#130912] mb-1"
+              htmlFor="email"
+            >
               Email
             </label>
             <input
@@ -92,7 +111,10 @@ const Signup = () => {
             />
           </div>
           <div className="mb-4 relative">
-            <label className="block font-semibold text-[#130912] mb-1" htmlFor="password">
+            <label
+              className="block font-semibold text-[#130912] mb-1"
+              htmlFor="password"
+            >
               Password
             </label>
             <input
@@ -119,17 +141,20 @@ const Signup = () => {
           </div>
           <button
             type="submit"
-            className={`w-full bg-[#E77917] text-white font-semibold rounded-lg py-2 hover:bg-[#130912] transition ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            className={`w-full bg-[#E77917] text-white font-semibold rounded-lg py-2 hover:bg-[#130912] transition ${
+              loading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
             disabled={loading} // Disable button during loading
           >
-            {loading ? "Saving..." : "Sign Up"} {/* Change text during loading */}
+            {loading ? "Saving..." : "Sign Up"}{" "}
+            {/* Change text during loading */}
           </button>
         </form>
         <p className="text-center text-[#130912] mt-4">
           Already have an account?{" "}
-          <a href="/login" className="text-[#E77917] font-semibold">
+          <Link to="/login" className="text-[#E77917] font-semibold">
             Login
-          </a>
+          </Link>
         </p>
       </motion.div>
     </div>

@@ -13,7 +13,7 @@ const India = () => {
     const fetchNews = async () => {
       try {
         const response = await axios.get("https://newsapp-vfx1.onrender.com/news");
-        console.log(response.data.data[0].category);
+        // const response = await axios.get("http://localhost:8000/news");
 
         const filteredNews = response.data.data.filter(
           (news) => news.category.toLowerCase() === "india"
