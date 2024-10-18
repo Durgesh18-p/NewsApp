@@ -3,9 +3,10 @@ import { motion } from "framer-motion";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { toast, Toaster } from "react-hot-toast";
 import Cookies from "js-cookie";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -60,7 +61,7 @@ const Login = () => {
 
       // Redirect to home or dashboard
       setTimeout(() => {
-        window.location.href = "/";
+        navigate("/");
       }, 1000);
     } catch (error) {
       setError(error.message);
