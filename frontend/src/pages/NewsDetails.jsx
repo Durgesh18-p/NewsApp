@@ -78,8 +78,8 @@ const NewsDetails = () => {
 
     try {
       const response = await axios.post(
-        // `https://newsapp-vfx1.onrender.com/comments/${id}`,
-        `http://localhost:8000/comments/${id}`,
+        `https://newsapp-vfx1.onrender.com/comments/${id}`,
+        // `http://localhost:8000/comments/${id}`,
         {
           comment: newComment,
         }
